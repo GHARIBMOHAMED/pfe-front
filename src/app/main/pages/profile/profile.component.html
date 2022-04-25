@@ -1,0 +1,161 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <!-- content-header component -->
+    
+
+    <div id="user-profile">
+      
+
+      <!-- profile info section -->
+      <section id="profile-info">
+        <div class="row">
+          <!-- left profile info section -->
+          <div class="col-lg-2 col-12 order-2 order-lg-1">
+            <!-- about -->
+      
+            <!-- twitter feed card -->
+            
+          </div>
+          <!--/ left profile info section -->
+
+          <!-- center profile info section -->
+          <div class="col-lg-8 col-12 order-1 order-lg-2">
+            <div class="card" *ngFor="let postRef of data">
+              <div class="card-body">
+                <div class="d-flex justify-content-start align-items-center mb-1">
+                  <!-- avatar -->
+                  <div class="avatar mr-1">
+                    <img src="https://www.shareicon.net/data/512x512/2015/09/18/103160_man_512x512.png" alt="avatar img" height="50" width="50" />
+                  </div>
+                  <!--/ avatar -->
+                  <div class="profile-user-info">
+                    <h6 class="mb-0">{{ postRef.appUser["firstName"] }}</h6>
+                    <small class="text-muted">{{ postRef.postDate }}</small>
+                  </div>
+                </div>
+                <h3 class="card-text">
+                  {{ postRef.postTitle }}
+                </h3>
+                <br>
+                <p class="card-text">
+                  {{ postRef.postBody }}
+                </p>
+                <!-- post img -->
+                <div *ngIf="postRef.postImage">
+                  <img class="img-fluid rounded mb-75" src="{{ postRef.postImage }}" alt="avatar img" />
+                </div>
+
+                <div *ngIf="postRef.postVid">
+                  <iframe
+                    [src]="postRef.postVid | safe: 'resourceUrl'"
+                    class="w-100 rounded border-0 height-250 mb-50"
+                  ></iframe>
+                </div>
+
+                <!-- like share -->
+                <div class="row d-flex justify-content-start align-items-center flex-wrap pb-50">
+                  <div class="col-sm-6 d-flex justify-content-between justify-content-sm-start mb-2">
+                    <a href="javascript:void(0)" class="d-flex align-items-center text-muted text-nowrap">
+                      <i data-feather="heart" class="profile-likes font-medium-3 mr-50"></i>
+                      <span>{{ postRef.likes }}</span>
+                    </a>
+
+                    <!-- avatar group with tooltip -->
+                    <div class="d-flex align-items-center">
+                      <div class="avatar-group ml-1">
+                        <div
+                          data-toggle="tooltip"
+                          data-popup="tooltip-custom"
+                          placement="bottom"
+                          ngbTooltip="{{ likedUsersRef.username }}"
+                          class="avatar pull-up"
+                          *ngFor="let likedUsersRef of postRef.likedUsers"
+                        >
+                          <img [src]="likedUsersRef.avatar" alt="Avatar" height="26" width="26" />
+                        </div>
+                      </div>
+                      <a href="javascript:void(0)" class="text-muted text-nowrap ml-50"
+                        >+{{ postRef.postLikes }} more</a
+                      >
+                    </div>
+                    <!-- avatar group with tooltip -->
+                  </div>
+
+                  <!-- share and like count and icons -->
+                  <div class="col-sm-6 d-flex justify-content-between justify-content-sm-end align-items-center mb-2">
+                    <a href="javascript:void(0)" class="text-nowrap">
+                      <i data-feather="message-square" class="text-body font-medium-3 mr-50"></i>
+                      <span class="text-muted mr-1">{{ postRef.postReplies }}</span>
+                    </a>
+
+                    <a href="javascript:void(0)" class="text-nowrap">
+                      <i data-feather="share-2" class="text-body font-medium-3 mx-50"></i>
+                      <span class="text-muted">{{ postRef.share }}</span>
+                    </a>
+                  </div>
+                  <!-- share and like count and icons -->
+                </div>
+                <!-- like share -->
+
+                <!-- comments -->
+                <div
+                  class="d-flex align-items-start mb-1"
+                  *ngFor="let detailedCommentsRefRef of postRef.detailedComments"
+                >
+                  <div class="avatar mt-25 mr-75">
+                    <img [src]="detailedCommentsRefRef.avatar" alt="Avatar" height="34" width="34" />
+                  </div>
+                  <div class="profile-user-info w-100">
+                    <div class="d-flex align-items-center justify-content-between">
+                      <h6 class="mb-0">{{ detailedCommentsRefRef.username }}</h6>
+                      <a href="javascript:void(0)">
+                        <i data-feather="heart" class="text-body font-medium-3 profile-likes"></i>
+                        <span class="align-middle text-muted"> {{ detailedCommentsRefRef.commentsLikes }}</span>
+                      </a>
+                    </div>
+                    <small>{{ detailedCommentsRefRef.comment }}</small>
+                  </div>
+                </div>
+
+                <!--/ comments -->
+
+                <!-- comment box -->
+                <fieldset class="form-label-group mb-50">
+                  <textarea class="form-control" id="label-textarea" rows="3" placeholder="Add Comment"></textarea>
+                  <label for="label-textarea">Add Comment</label>
+                </fieldset>
+                <!--/ comment box -->
+                <button type="button" class="btn btn-sm btn-primary" rippleEffect>Post Comment</button>
+              </div>
+            </div>
+          </div>
+          <!--/ center profile info section -->
+
+        
+        </div>
+
+        <!-- reload button -->
+        <div class="row">
+          <div class="col-12 text-center">
+            <button
+              type="button"
+              class="btn btn-sm btn-primary block-element border-0 mb-1"
+              rippleEffect
+              (click)="loadMore()"
+            >
+              <span
+                role="status"
+                aria-hidden="true"
+                [class.spinner-border]="loadMoreRef"
+                class="spinner-border-sm"
+              ></span>
+              Load More
+            </button>
+          </div>
+        </div>
+        <!--/ reload button -->
+      </section>
+      <!--/ profile info section -->
+    </div>
+  </div>
+</div>
